@@ -51,6 +51,8 @@ const createPlayer = (position, forgetfulness) => {
     }
     */
 
+
+// Promise.then
     const lautePost = (word) => {
         let players = createPlayers(word.length)
         let forgotten = [];

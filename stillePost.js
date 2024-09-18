@@ -5,7 +5,7 @@ const replaceCharacterAt = (word, replacement, position) => {
   
 	return word.substring(0, position) + replacement + word.substring(position+1);
 }
-/*
+
 const playerOne = (word) => {
 	return new Promise((resolve) => {
     setTimeout(() => {
@@ -93,7 +93,7 @@ async function stillePost (word) {
 }
 
 stillePost('aaa');
-*/
+
 
 // Aufgabe 2
 
