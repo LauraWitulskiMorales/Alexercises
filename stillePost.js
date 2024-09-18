@@ -5,7 +5,7 @@ const replaceCharacterAt = (word, replacement, position) => {
   
 	return word.substring(0, position) + replacement + word.substring(position+1);
 }
-
+/*
 const playerOne = (word) => {
 	return new Promise((resolve) => {
     setTimeout(() => {
@@ -38,8 +38,10 @@ const playerThree = (word) => {
   });
 }
 
+// Aufgabe 1
+
 // Promise 
-/*const stillePost = (word) => {
+const stillePost = (word) => {
   let forgotten = [];
 	
   return playerOne (word)
@@ -62,7 +64,7 @@ const playerThree = (word) => {
       console.log("Final result:", finalResult);
       console.log("Players who forgot:", forgotten.length > 0 ? forgotten.join(", ") : "None");
     });
-} */
+} 
 
 // Async 
 async function stillePost (word) {
@@ -91,3 +93,49 @@ async function stillePost (word) {
 }
 
 stillePost('aaa');
+*/
+
+// Aufgabe 2
+
+const createPlayer = (position, forgetfulness) => {
+  return (word) => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (Math.random() <= forgetfulness) {
+          reject(`Player at postition ${position} forgot the word`);
+        } else {
+          resolve(replaceCharacterAt(word, "b", position));
+        }
+      }, 1000);
+    });
+  };
+};
+
+const createPlayers = (wordLength) => {
+  let players = [];
+  for (let i = 0; i < wordLength; i++) {
+    let forgetfulness = 0.1 + Math.random() * 0.8;
+    players.push(createPlayer(i, forgetfulness));
+  }
+  return players;
+};
+
+const stillePost = async (word) => {
+  let players = createPlayers(word.length);
+  let currentWord = word;
+  let forgotten = [];
+
+  for (let i = 0; i < players.length; i++) {
+    try {
+      currentWord = await players[i](currentWord);
+    } catch (e) {
+      forgotten.push(`Player ${i + 1}`);
+      console.log(e);
+    }
+  }
+  console.log("Start word:", word);
+  console.log("Final result:", currentWord);
+  console.log("Players who forgot:", forgotten.length > 0 ? forgotten.join(", ") : "None");
+}
+
+stillePost('aaaa');
